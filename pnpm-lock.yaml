@@ -24,6 +24,9 @@ importers:
       '@tailwindcss/turbopack':
         specifier: 4.3.3
         version: 4.3.3
+      '@types/airtable':
+        specifier: ^0.10.5
+        version: 0.10.5
       '@types/node':
         specifier: ^20
         version: 20.19.43
@@ -511,6 +514,10 @@ packages:
 
   '@tailwindcss/turbopack@4.3.3':
     resolution: {integrity: sha512-FgL4wRgItNdXcDjcgYUSd59gNsWqNVK4GotjZimZMmt7OOIkRNqH2QEUcRXLdBDXvwTsi5rkYxDxzfrFUkmObQ==}
+
+  '@types/airtable@0.10.5':
+    resolution: {integrity: sha512-7d/sxOUdNrS/OTK7712qUqvb3GH8Y8ts/G2rxgVCZRw9MvfWRvX4yOs794q+WlUqYEdnkrYIPiule9+bYMslhg==}
+    deprecated: This is a stub types definition. airtable provides its own type definitions, so you do not need this installed.
 
   '@types/estree@1.0.10':
     resolution: {integrity: sha512-lTyOMnOcmRBzdCv6/4zUZCrEhV0xrqQiUZBZtVcbmLHBXKLnN8q89v/wKRF/Q0HbwVsqbIG3o5HDoFl9sduM+g==}
@@ -2406,6 +2413,12 @@ snapshots:
       '@tailwindcss/node': 4.3.3
       '@tailwindcss/oxide': 4.3.3
       tailwindcss: 4.3.3
+
+  '@types/airtable@0.10.5':
+    dependencies:
+      airtable: 0.12.2
+    transitivePeerDependencies:
+      - encoding
 
   '@types/estree@1.0.10': {}
 
