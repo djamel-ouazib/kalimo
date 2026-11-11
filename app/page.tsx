@@ -2,6 +2,7 @@ import { Suspense } from 'react'
 
 import ListeLots from '@/components/ListeLots'
 import FilterType from '@/components/FilterType'
+import FormulaireDemande from '@/components/FormulaireDemande'
 
 async function ContenuFiltre({
     searchParams,
@@ -31,6 +32,9 @@ export default function Home({
             <Suspense fallback={<p>Chargement...</p>}>
                 <ContenuFiltre searchParams={searchParams} />
             </Suspense>
+            <div className="mt-12">
+                <FormulaireDemande />
+            </div>
         </main>
     )
 }
