@@ -3,6 +3,8 @@
 ## 1. Choix techniques
 
 -   **Next.js 16 avec TypeScript et Tailwind** : un seul projet pour l'affichage et le code serveur, déployé sur Vercel.
+-   **Pourquoi Next.js** : le brief demande un site public qui doit être référencé et rapide, avec un formulaire qui écrit dans une base. Next.js génère le HTML côté serveur, donc la liste des lots est lisible dès le premier chargement, ce qui est important pour le référencement. Les Server Actions permettent d'écrire le formulaire sans créer une API séparée, et le token Airtable reste dans le serveur. Vercel déploie le projet directement depuis GitHub. Une application React qui tourne seulement dans le navigateur aurait affiché une page vide aux moteurs de recherche et demandé une API séparée. Next.js n'était pas obligatoire : d'autres outils auraient pu convenir.
+-   **Référencement (SEO)** : chaque page a un titre et une description (`metadata`), pour que le nom du programme et la ville apparaissent dans les résultats de recherche.
 -   **Airtable comme source de données**, comme imposé par le brief. Accès depuis le serveur avec le package officiel `airtable`.
 -   **Pas de Prisma** : Prisma est un ORM pour bases SQL, il ne fonctionne pas avec Airtable.
 -   **Token Airtable côté serveur uniquement** : stocké dans les variables d'environnement (`.env.local` en local, Vercel en production). Il n'apparaît ni dans le code versionné ni dans le navigateur.
@@ -25,7 +27,7 @@
 -   **Limite de 1000 caractères** sur le message.
 -   **Champ piège anti-spam** : caché aux visiteurs, une demande qui le remplit est ignorée sans message d'erreur.
 -   **Validation côté serveur** : les champs sont vérifiés dans la Server Action, pas seulement dans le navigateur.
--   **Mention d'information** : le site affiche la case de consentement et la phrase « Vos données servent uniquement à répondre à votre demande ». Je n'ai pas rédigé de politique de confidentialité complète ni de procédure de suppression des données : c'est à traiter avant une mise en production réelle.
+-   **Mention d'information** : le site affiche la case de consentement et la phrase « Vos données servent uniquement à répondre à votre demande ». Je n'ai pas rédigé de politique de confidentialité complète ni de procédure de suppression des données : c'est à traiter avant une mise en production réelle, avec le client et son avocat.
 
 ## 4. Hypothèses sur le brief
 
@@ -35,13 +37,13 @@
 
 ## 5. Bonus
 
--   **Page de présentation** (`/programme`) : faite. Visuel généré par IA, à titre illustratif, à remplacer par les vraies images du promoteur. La mention « non contractuel » est affichée sur la page.
+-   **Page de présentation** (`/programme`) : faite. Le visuel principal est une carte postale aquarelle générée par IA, à titre illustratif et non contractuel. Il est à remplacer par les vraies images du promoteur. La mention est affichée sur la page.
 -   **Compteur de demandes** : non codé. Le nombre de demandes se lit directement dans Airtable. Je n'ai pas mis de compteur sur le site, car il serait public.
 
 ## 6. Ce qui est laissé de côté
 
--   Pas de politique de confidentialité complète ni de procédure de suppression des données.
--   Pas de captcha : la protection anti-spam repose uniquement sur le champ piège.
+-   Pas de politique de confidentialité complète ni de procédure de suppression des données. Ce point engage le client, il doit être validé avant une mise en production.
+-   **Captcha non mis en place.** J'ai d'abord voulu ajouter un captcha, puis j'ai demandé à mon assistant de code une solution simple. Il m'a proposé un champ piège caché, qui ne gêne pas le visiteur. J'ai gardé cette solution pour ce premier déploiement, en sachant qu'elle est moins robuste qu'un captcha : si le formulaire reçoit du spam en production, un captcha sera la prochaine étape.
 -   Pas de notification email à l'équipe commerciale : elle consulte la table Demandes dans Airtable.
 -   Pas de vérification du statut d'un lot avant l'envoi d'une demande.
 -   Le design a été privilégié sur les fonctionnalités annexes : je me suis concentré sur l'essentiel du brief, puis sur une présentation soignée, plutôt que sur des protections supplémentaires.
@@ -54,13 +56,14 @@
 
 ## 8. Usage de l'IA
 
--   **Outils utilisés** : un assistant de code pour l'écriture et la correction de Next.js ; l'assistant intégré à Airtable pour la structure de la base et les lots fictifs ; un générateur d'images pour le visuel de la page programme.
--   **Ce que j'ai relu, compris ou réécrit moi-même** : la Server Action qui écrit dans Airtable, avec la validation des champs et la gestion du champ piège. J'ai réorganisé le code en `lib/` pour les données et en `components/` pour l'affichage. J'ai corrigé les erreurs liées au cache et au `Suspense` de Next.js 16 après les avoir comprises.
+-   **Outils utilisés** : un assistant de code pour l'aide à l'écriture et au débogage de Next.js ; l'assistant intégré à Airtable pour la structure de la base et les lots fictifs ; un générateur d'images pour le visuel de la page programme.
+-   **Ce que j'ai relu et compris** : j'ai relu l'ensemble du code, y compris les erreurs de Next.js 16 (cache et `Suspense`), que j'ai corrigées après les avoir comprises.
+-   **Ce que j'ai écrit moi-même** : la partie Airtable et `lib/lots.ts`, car c'était la première fois que j'utilisais Airtable. J'ai aussi organisé le code en `lib/` pour les données et en `components/` pour l'affichage.
 -   **Ce que j'ai refusé ou corrigé** : je n'ai pas accepté de mettre `"use client"` dans la page ni dans les composants qui ne l'exigent pas. Le token Airtable n'a jamais été partagé avec l'assistant. Je n'ai pas gardé de suggestion qui exposait une donnée côté navigateur.
 
 ## 9. Temps passé
 
--   Total réel : 2 h 20 (de 14 h 30 à 16 h 50), tests compris.
+-   Total réel : 2 h 30 (de 14 h 30 à 17 h 00), tests compris.
 
 ## Annexe : prompt donné à l'assistant Airtable
 
